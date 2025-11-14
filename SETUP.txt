@@ -1,0 +1,19 @@
+YouTube Viral Tracker - Setup
+
+1. Get your Apify API token:
+   - Sign up at https://apify.com
+   - Go to Settings > Integrations
+   - Copy your API token
+
+2. Add API token to .env.local:
+   APIFY_API_TOKEN=your_actual_token_here
+
+3. Install dependencies:
+   npm install
+
+4. Run development server:
+   npm run dev
+
+5. Open http://localhost:3000 in your browser
+
+6. Enter a YouTube channel URL and get the top 50 viral videos!
