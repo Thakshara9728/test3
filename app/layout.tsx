@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import MainNav from "./components/navigation/MainNav";
 
 export const metadata: Metadata = {
-  title: "YouTube Viral Tracker",
-  description: "Discover the top 50 most viewed videos from any YouTube channel",
+  title: "YouTube AI Studio",
+  description: "AI-powered YouTube automation and viral content discovery",
 };
 
 export default function RootLayout({
@@ -14,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <MainNav />
         {children}
       </body>
     </html>

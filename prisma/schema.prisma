@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Channel {
+  id              String    @id @default(cuid())
+  name            String
+  niche           String
+  description     String?
+  status          String    @default("ACTIVE") // ACTIVE, PAUSED, ARCHIVED
+
+  // Claude Projects integration
+  claudeProjectId String?
+
+  // Settings stored as JSON
+  settings        String    @default("{}")
+
+  prompts         Prompt[]
+  scripts         Script[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Prompt {
+  id              String    @id @default(cuid())
+  channelId       String
+  channel         Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  type            String    // SCRIPT, IMAGE, VIDEO
+  name            String
+  systemPrompt    String
+
+  // Claude API settings
+  useExtendedThinking Boolean @default(false)
+  thinkingBudget  Int?
+  useWebSearch    Boolean    @default(false)
+  model           String     @default("claude-sonnet-4-20250514")
+  maxTokens       Int        @default(4096)
+  temperature     Float      @default(1.0)
+
+  version         Int        @default(1)
+  isActive        Boolean    @default(true)
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([channelId, type, isActive])
+}
+
+model Script {
+  id              String    @id @default(cuid())
+  channelId       String
+  channel         Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  title           String
+  topic           String
+  content         String
+
+  // Metadata
+  wordCount       Int?
+  duration        Int?
+  status          String    @default("DRAFT") // DRAFT, GENERATING, GENERATED, REVIEWED
+
+  // Generated assets
+  imagePrompts    ImagePrompt[]
+  videoPrompts    VideoPrompt[]
+
+  // Claude API metadata
+  thinkingContent String?
+  tokensUsed      Int?
+  cost            Float?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([channelId, status])
+}
+
+model ImagePrompt {
+  id              String    @id @default(cuid())
+  scriptId        String
+  script          Script    @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+
+  type            String    // THUMBNAIL, B_ROLL, SCENE
+  prompt          String
+  negativePrompt  String?
+
+  // Settings for image generation stored as JSON
+  settings        String    @default("{}")
+
+  // Generated image
+  imageUrl        String?
+  generatedAt     DateTime?
+
+  order           Int
+
+  createdAt       DateTime  @default(now())
+
+  @@index([scriptId])
+}
+
+model VideoPrompt {
+  id              String    @id @default(cuid())
+  scriptId        String
+  script          Script    @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+
+  prompt          String
+  duration        Int?
+  settings        String    @default("{}")
+
+  // Generated video
+  videoUrl        String?
+  generatedAt     DateTime?
+
+  order           Int
+
+  createdAt       DateTime  @default(now())
+
+  @@index([scriptId])
+}

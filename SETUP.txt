@@ -1,19 +1,67 @@
-YouTube Viral Tracker - Setup
+YouTube AI Studio - Setup Guide
 
-1. Get your Apify API token:
-   - Sign up at https://apify.com
-   - Go to Settings > Integrations
-   - Copy your API token
+=== QUICK START ===
 
-2. Add API token to .env.local:
-   APIFY_API_TOKEN=your_actual_token_here
-
-3. Install dependencies:
+1. Install dependencies:
    npm install
+
+2. Configure API keys in .env.local:
+   # For Viral Tracker
+   APIFY_API_TOKEN=your_apify_token_here
+
+   # For AI Automation
+   ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+   # Database (auto-configured)
+   DATABASE_URL="file:./dev.db"
+
+3. Initialize database (optional - auto-creates on first use):
+   npx prisma generate
+   npx prisma db push
 
 4. Run development server:
    npm run dev
 
-5. Open http://localhost:3000 in your browser
+5. Open http://localhost:3000
 
-6. Enter a YouTube channel URL and get the top 50 viral videos!
+=== FEATURES ===
+
+1. VIRAL TRACKER (/tracker)
+   - Scrape top 50 viral videos from any YouTube channel
+   - Export video titles (copy or download)
+   - Requires: Apify API token
+
+2. AI AUTOMATION (/automation)
+   - Generate scripts with Claude AI
+   - Extended thinking for deep reasoning
+   - Web search integration
+   - Multi-channel management
+   - Requires: Anthropic API key
+
+=== GETTING API KEYS ===
+
+Apify (for Viral Tracker):
+1. Sign up at https://apify.com
+2. Go to Settings > Integrations
+3. Copy your API token
+
+Anthropic Claude (for AI Automation):
+1. Sign up at https://console.anthropic.com
+2. Go to API Keys
+3. Create a new API key
+4. Copy the key (starts with "sk-ant-")
+
+=== WORKFLOW ===
+
+1. Use Viral Tracker to research what content is working
+2. Export viral video titles
+3. Use AI Automation to generate scripts based on trends
+4. Configure channel-specific prompts for your niche
+5. Generate scripts with Claude's extended thinking
+
+=== COST ESTIMATES ===
+
+Apify: Free tier available, ~$0.10 per channel scrape
+Claude API: ~$0.06-$0.10 per script (Sonnet 4)
+
+See IMPLEMENTATION_PLAN.md for detailed architecture and roadmap.
