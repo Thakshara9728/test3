@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import VideoCard from './components/VideoCard';
 import LoadingSpinner from './components/LoadingSpinner';
+import ExportButtons from './components/ExportButtons';
 
 interface Video {
   title: string;
@@ -118,13 +119,16 @@ export default function Home() {
         {/* Results */}
         {!loading && videos.length > 0 && (
           <div>
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                Top {videos.length} Viral Videos
-              </h2>
-              <div className="text-sm text-slate-600 dark:text-slate-400">
-                Sorted by views
+            <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center justify-between sm:justify-start gap-4">
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                  Top {videos.length} Viral Videos
+                </h2>
+                <div className="text-sm text-slate-600 dark:text-slate-400">
+                  Sorted by views
+                </div>
               </div>
+              <ExportButtons titles={videos.map(v => v.title)} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {videos.map((video, index) => (
