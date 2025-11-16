@@ -25,6 +25,7 @@ model Channel {
 
   prompts         Prompt[]
   scripts         Script[]
+  knowledgeBase   KnowledgeBase[]
 
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -79,6 +80,10 @@ model Script {
   tokensUsed      Int?
   cost            Float?
 
+  // Context tracking
+  contextUsed     String?   // IDs of knowledge base items used
+  previousScriptId String?  // Link to previous script for context chain
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -126,4 +131,27 @@ model VideoPrompt {
   createdAt       DateTime  @default(now())
 
   @@index([scriptId])
+}
+
+model KnowledgeBase {
+  id              String    @id @default(cuid())
+  channelId       String
+  channel         Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  type            String    // GUIDELINE, EXAMPLE, BRAND_VOICE, STYLE_GUIDE, REFERENCE
+  title           String
+  content         String    // The actual knowledge content
+
+  // Optional metadata
+  description     String?
+  tags            String?   // Comma-separated tags
+  priority        Int       @default(0) // Higher = more important in context
+
+  isActive        Boolean   @default(true)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([channelId, isActive])
+  @@index([channelId, type])
 }

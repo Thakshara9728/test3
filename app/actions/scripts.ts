@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { anthropic, CLAUDE_MODELS } from '@/lib/anthropic';
 import { revalidatePath } from 'next/cache';
+import { buildChannelContext } from './knowledge';
 
 export async function generateScript(input: {
   channelId: string;
@@ -43,6 +44,12 @@ export async function generateScript(input: {
       return { error: 'No active script prompt found for this channel' };
     }
 
+    // Build channel context from knowledge base
+    const channelContext = await buildChannelContext(channelId);
+
+    // Enhance system prompt with channel context
+    const enhancedSystemPrompt = `${prompt.systemPrompt}${channelContext}`;
+
     // Build user message
     const userMessage = `Create a YouTube video script for the following:
 
@@ -60,7 +67,7 @@ Please structure the script with:
 Make it engaging, informative, and optimized for viewer retention.`;
 
     // Call Claude API with extended thinking
-    console.log('Calling Claude API with extended thinking...');
+    console.log('Calling Claude API with extended thinking and channel context...');
 
     const response = await anthropic.messages.create({
       model: prompt.model || CLAUDE_MODELS.SONNET,
@@ -72,7 +79,7 @@ Make it engaging, informative, and optimized for viewer retention.`;
           budget_tokens: prompt.thinkingBudget || 2048,
         },
       }),
-      system: prompt.systemPrompt,
+      system: enhancedSystemPrompt,
       messages: [
         {
           role: 'user',
