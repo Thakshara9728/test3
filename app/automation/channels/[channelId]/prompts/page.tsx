@@ -22,6 +22,12 @@ export default function ChannelPromptsPage() {
   }, [channelId]);
 
   const loadData = async () => {
+    if (!channelId) {
+      console.error('Channel ID is undefined');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
 
     const [channelResult, promptsResult] = await Promise.all([
