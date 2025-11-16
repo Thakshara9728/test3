@@ -17,7 +17,7 @@ export default function Home() {
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/* Viral Tracker */}
           <Link
             href="/tracker"
@@ -89,13 +89,49 @@ export default function Home() {
               </div>
             </div>
           </Link>
+
+          {/* Freepik AI Studio */}
+          <Link
+            href="/freepik"
+            className="group relative bg-white dark:bg-slate-900 rounded-3xl p-8 border-2 border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-2"
+          >
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
+
+            <div className="relative">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-500/30">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                Freepik AI Studio
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 mb-6">
+                Generate stunning AI images with Google Gemini 2.5 Flash. Multiple aspect ratios, batch generation, and instant downloads.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="px-3 py-1 bg-purple-100 dark:bg-purple-950/30 text-purple-700 dark:text-purple-400 rounded-full text-sm">Freepik API</span>
+                <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-sm">Image Generation</span>
+                <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-sm">AI Powered</span>
+              </div>
+
+              <div className="flex items-center text-purple-600 dark:text-purple-400 font-medium group-hover:gap-3 transition-all">
+                <span>Start Generating</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+          </Link>
         </div>
 
         {/* Stats */}
         <div className="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
           <div>
             <div className="text-3xl font-bold bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent mb-2">
-              2 Tools
+              3 Tools
             </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">
               In One Platform
@@ -114,7 +150,7 @@ export default function Home() {
               AI Powered
             </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">
-              Claude & Apify APIs
+              Claude, Apify & Freepik APIs
             </div>
           </div>
         </div>
