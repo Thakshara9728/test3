@@ -2,7 +2,7 @@
 
 ## 🔧 IMPORTANT: First Time Setup
 
-If you get "Prisma client not initialized" error, run these commands:
+If you get "Prisma client not initialized" or "DATABASE_URL not found" error:
 
 ### Step 1: Generate Prisma Client
 ```bash
@@ -13,6 +13,7 @@ npx prisma generate
 ```bash
 npx prisma db push
 ```
+**Note:** A `.env` file with `DATABASE_URL` has already been created for you!
 
 ### Step 3: Restart Dev Server
 ```bash
