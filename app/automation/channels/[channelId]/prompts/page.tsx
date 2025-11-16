@@ -1,27 +1,32 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { getChannel, getChannelPrompts } from '@/app/actions/prompts';
 import EditPromptModal from '@/app/components/prompts/EditPromptModal';
 
-export default function ChannelPromptsPage({ params }: { params: { channelId: string } }) {
+export default function ChannelPromptsPage() {
   const router = useRouter();
+  const params = useParams();
+  const channelId = params.channelId as string;
+
   const [channel, setChannel] = useState<any>(null);
   const [prompts, setPrompts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingPrompt, setEditingPrompt] = useState<any>(null);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (channelId) {
+      loadData();
+    }
+  }, [channelId]);
 
   const loadData = async () => {
     setLoading(true);
 
     const [channelResult, promptsResult] = await Promise.all([
-      getChannel(params.channelId),
-      getChannelPrompts(params.channelId),
+      getChannel(channelId),
+      getChannelPrompts(channelId),
     ]);
 
     if (channelResult.success && channelResult.channel) {
