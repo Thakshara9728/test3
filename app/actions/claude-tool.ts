@@ -48,7 +48,9 @@ export async function createClaudeTool(data: {
   model?: string;
   useExtendedThinking?: boolean;
   thinkingBudget?: number;
+  useUltraThink?: boolean;
   useWebSearch?: boolean;
+  usePromptCaching?: boolean;
   maxTokens?: number;
   temperature?: number;
 }) {
@@ -63,7 +65,9 @@ export async function createClaudeTool(data: {
         model: data.model || 'claude-3-7-sonnet-20250219',
         useExtendedThinking: data.useExtendedThinking ?? true,
         thinkingBudget: data.thinkingBudget ?? 10000,
+        useUltraThink: data.useUltraThink ?? false,
         useWebSearch: data.useWebSearch ?? true,
+        usePromptCaching: data.usePromptCaching ?? true,
         maxTokens: data.maxTokens ?? 8000,
         temperature: data.temperature ?? 1.0,
       },
@@ -88,7 +92,9 @@ export async function updateClaudeTool(
     model?: string;
     useExtendedThinking?: boolean;
     thinkingBudget?: number;
+    useUltraThink?: boolean;
     useWebSearch?: boolean;
+    usePromptCaching?: boolean;
     maxTokens?: number;
     temperature?: number;
     isActive?: boolean;

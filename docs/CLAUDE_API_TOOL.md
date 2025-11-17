@@ -8,6 +8,8 @@ The Claude API Tool feature allows you to create custom AI tools powered by Clau
 
 - **Claude Sonnet 3.7**: Uses the latest Claude Sonnet 3.7 model with extended thinking
 - **Extended Thinking**: Enable deep reasoning with configurable thinking budgets (up to 100,000 tokens)
+- **UltraThink Mode**: Deep thinking mode with 50,000 token budget for complex reasoning
+- **Prompt Caching**: Cache system prompts to save 90% on repeated requests (costs 25% more to write, 90% less to read)
 - **Web Search Tool**: Integrate real-time web search capabilities
 - **Three-Prompt System**: Configure main, first message, and continuation prompts
 - **Conversation History**: Automatically saves and tracks all conversations
@@ -30,10 +32,12 @@ model ClaudeTool {
   continuePartsPrompt   String    // Prompt for continuing/extending content
 
   // Claude API settings
-  model                 String    @default("claude-sonnet-3-7-20250219")
+  model                 String    @default("claude-3-7-sonnet-20250219")
   useExtendedThinking   Boolean   @default(true)
   thinkingBudget        Int?      @default(10000)
+  useUltraThink         Boolean   @default(false) // 50k token budget
   useWebSearch          Boolean   @default(true)
+  usePromptCaching      Boolean   @default(true)  // Save $ with caching
   maxTokens             Int       @default(8000)
   temperature           Float     @default(1.0)
 
@@ -197,7 +201,19 @@ while maintaining the same tone and style.
 ### Extended Thinking
 - **Enabled**: Allows Claude to think deeply before responding
 - **Thinking Budget**: 1,000 - 100,000 tokens (default: 10,000)
+- **UltraThink Mode**: Automatically sets thinking budget to 50,000 tokens for complex reasoning tasks
 - Thinking output is displayed separately in the UI
+
+### Prompt Caching
+- **Enabled by Default**: Caches the system prompt to reduce costs
+- **How it Works**: Uses Claude's `beta.prompt_caching.messages` endpoint
+- **Cache Duration**: 5 minutes of inactivity (ephemeral cache)
+- **Cost Savings**:
+  - Cache writes: 25% more expensive than base input tokens
+  - Cache reads: 90% cheaper than base input tokens
+  - Example: After first request, subsequent requests save ~90% on system prompt costs
+- **Format**: System prompt is sent as an array with `cache_control: { type: 'ephemeral' }`
+- Particularly valuable for tools with large system prompts used frequently
 
 ### Web Search
 - **Tool Type**: `web_search_20250305`

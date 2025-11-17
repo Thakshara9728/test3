@@ -170,7 +170,9 @@ model ClaudeTool {
   model                 String    @default("claude-3-7-sonnet-20250219")
   useExtendedThinking   Boolean   @default(true)
   thinkingBudget        Int?      @default(10000) // Tokens for thinking
+  useUltraThink         Boolean   @default(false) // Ultra thinking mode (50k tokens)
   useWebSearch          Boolean   @default(true)
+  usePromptCaching      Boolean   @default(true) // Cache system prompt to save $
   maxTokens             Int       @default(8000)
   temperature           Float     @default(1.0)
 

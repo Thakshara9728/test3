@@ -19,7 +19,9 @@ export default function NewToolPage() {
     model: 'claude-3-7-sonnet-20250219',
     useExtendedThinking: true,
     thinkingBudget: 10000,
+    useUltraThink: false,
     useWebSearch: true,
+    usePromptCaching: true,
     maxTokens: 8000,
     temperature: 1.0,
   });
@@ -206,7 +208,7 @@ export default function NewToolPage() {
                 </label>
               </div>
 
-              {formData.useExtendedThinking && (
+              {formData.useExtendedThinking && !formData.useUltraThink && (
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Thinking Budget (tokens)
@@ -225,6 +227,19 @@ export default function NewToolPage() {
               <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
+                  id="ultraThink"
+                  checked={formData.useUltraThink}
+                  onChange={(e) => setFormData({ ...formData, useUltraThink: e.target.checked, useExtendedThinking: e.target.checked ? true : formData.useExtendedThinking })}
+                  className="w-4 h-4 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
+                />
+                <label htmlFor="ultraThink" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Enable UltraThink Mode (50k tokens)
+                </label>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
                   id="webSearch"
                   checked={formData.useWebSearch}
                   onChange={(e) => setFormData({ ...formData, useWebSearch: e.target.checked })}
@@ -232,6 +247,19 @@ export default function NewToolPage() {
                 />
                 <label htmlFor="webSearch" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   Enable Web Search Tool
+                </label>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="promptCaching"
+                  checked={formData.usePromptCaching}
+                  onChange={(e) => setFormData({ ...formData, usePromptCaching: e.target.checked })}
+                  className="w-4 h-4 text-green-600 rounded focus:ring-2 focus:ring-green-500"
+                />
+                <label htmlFor="promptCaching" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Enable Prompt Caching (Save $ - 90% cheaper reads)
                 </label>
               </div>
 

@@ -97,20 +97,35 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Prepare system prompt with optional caching
+    const systemPromptConfig: any = tool.usePromptCaching
+      ? [
+          {
+            type: 'text',
+            text: systemPrompt,
+            cache_control: { type: 'ephemeral' }, // Cache for 5 minutes
+          },
+        ]
+      : systemPrompt;
+
     // Prepare Claude API request
     const requestParams: any = {
       model: tool.model,
       max_tokens: tool.maxTokens,
       temperature: tool.temperature,
-      system: systemPrompt,
+      system: systemPromptConfig,
       messages,
     };
 
-    // Add extended thinking if enabled
+    // Add extended thinking if enabled (ultrathink uses 50k tokens)
     if (tool.useExtendedThinking) {
+      const thinkingBudget = tool.useUltraThink
+        ? 50000
+        : (tool.thinkingBudget || 10000);
+
       requestParams.thinking = {
         type: 'enabled',
-        budget_tokens: tool.thinkingBudget || 10000,
+        budget_tokens: thinkingBudget,
       };
     }
 
@@ -125,8 +140,10 @@ export async function POST(request: NextRequest) {
       ];
     }
 
-    // Make the API call
-    const response = await anthropic.messages.create(requestParams);
+    // Make the API call using prompt caching endpoint if enabled
+    const response = tool.usePromptCaching
+      ? await anthropic.beta.prompt_caching.messages.create(requestParams)
+      : await anthropic.messages.create(requestParams);
 
     // Extract content blocks
     let textContent = '';
