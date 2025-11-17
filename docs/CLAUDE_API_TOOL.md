@@ -162,33 +162,75 @@ Located in `/app/actions/claude-tool.ts`:
 6. View extended thinking output in the sidebar
 7. Monitor token usage and costs
 
-## Three-Prompt System
+## Three-Prompt System (Like Claude Projects)
 
-### Main Prompt (System)
-The main system prompt that defines the tool's behavior, personality, and capabilities. This is sent with every request.
+The tool works like **Claude Projects**, where you have persistent instructions that guide the AI's behavior. The three prompts work together to create a complete conversational experience:
+
+### Main Prompt (System Instructions)
+The **main system prompt** defines the tool's core behavior, personality, and capabilities. This is **always sent as the system parameter** with every request, similar to project instructions in Claude Projects.
+
+**Example for YouTube Script Generator:**
+```
+You are an expert YouTube content writer and scriptwriter. You create engaging,
+well-researched scripts that capture audience attention and drive engagement.
+
+Your scripts are:
+- Well-structured with clear hooks, body content, and strong conclusions
+- Optimized for viewer retention with strategic pacing
+- Researched and fact-checked using web search when needed
+- Tailored to the specific niche and target audience
+
+Always provide actionable, valuable content that viewers will love.
+```
+
+### First Message Prompt (Conversation Starter)
+The **first message prompt** is automatically prepended to the user's first message when starting a new conversation. This sets the initial context and direction.
+
+**How it works:** When mode is 'start', the API combines: `firstMessagePrompt + "\n\n" + userMessage`
 
 **Example:**
 ```
-You are an expert content writer specializing in YouTube scripts.
-You create engaging, well-researched content that captures audience attention.
+Let's create an engaging YouTube script together. I'll start by researching the
+topic thoroughly, then outline the key points we'll cover, ensuring maximum viewer
+engagement and value.
+
+Please provide the topic or niche for this script.
 ```
 
-### First Message Prompt
-The initial message used when starting a new conversation. This sets the context and direction for the interaction.
+### Continue Parts Prompt (Continuation Template)
+The **continue parts prompt** is prepended to the user's message when continuing the conversation. This maintains context and guides the continuation.
 
-**Example:**
-```
-Let's create an engaging YouTube script. I'll start by researching the topic and
-outlining the key points to cover.
-```
-
-### Continue Parts Prompt
-Used when continuing or extending the conversation. This helps maintain context and guides the continuation.
+**How it works:** When mode is 'continue', the API combines: `continuePartsPrompt + "\n\n" + userMessage`
 
 **Example:**
 ```
-Please continue from where we left off, expanding on the next section of the script
-while maintaining the same tone and style.
+Continue developing the script from where we left off. Expand on the next section
+while maintaining the same tone, style, and engagement level we've established.
+```
+
+### Prompt Flow Examples
+
+**Starting a New Conversation:**
+```
+System: [Main Prompt - always present]
+User: [First Message Prompt] + "\n\n" + "Create a script about AI tools"
+Assistant: [Response]
+```
+
+**Continuing:**
+```
+System: [Main Prompt - always present]
+User: [Previous conversation...]
+User: [Continue Parts Prompt] + "\n\n" + "Add more examples"
+Assistant: [Response]
+```
+
+**Custom Message:**
+```
+System: [Main Prompt - always present]
+User: [Previous conversation...]
+User: "Can you revise the introduction?"
+Assistant: [Response]
 ```
 
 ## Configuration

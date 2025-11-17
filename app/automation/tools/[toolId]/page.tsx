@@ -25,6 +25,7 @@ export default function ToolDetailPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [thinking, setThinking] = useState('');
   const [usage, setUsage] = useState<any>(null);
+  const [debug, setDebug] = useState<any>(null);
 
   const [showSettings, setShowSettings] = useState(false);
   const [editData, setEditData] = useState<any>({});
@@ -82,6 +83,7 @@ export default function ToolDetailPage() {
         setCurrentConversationId(data.conversationId);
         setThinking(data.thinking || '');
         setUsage(data.usage);
+        setDebug(data.debug);
 
         // Add messages to the conversation
         if (mode === 'start') {
@@ -336,6 +338,49 @@ export default function ToolDetailPage() {
                   <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
                     <span className="text-slate-600 dark:text-slate-400">Total Tokens:</span>
                     <span className="font-semibold text-slate-900 dark:text-white">{usage.totalTokens.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Debug Info */}
+            {debug && (
+              <div className="bg-amber-50 dark:bg-amber-950/20 rounded-xl border-2 border-amber-200 dark:border-amber-800 p-6">
+                <h3 className="font-semibold text-amber-900 dark:text-amber-400 mb-4">🔧 Backend Details</h3>
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <span className="font-medium text-amber-800 dark:text-amber-300">Mode:</span>
+                    <span className="ml-2 text-amber-700 dark:text-amber-400">{debug.mode}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-amber-800 dark:text-amber-300">Model:</span>
+                    <span className="ml-2 text-amber-700 dark:text-amber-400">{debug.model}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-amber-800 dark:text-amber-300">Max Tokens:</span>
+                    <span className="ml-2 text-amber-700 dark:text-amber-400">{debug.maxTokens}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-amber-800 dark:text-amber-300">Extended Thinking:</span>
+                    <span className="ml-2 text-amber-700 dark:text-amber-400">
+                      {debug.extendedThinking ? `${debug.thinkingBudget} tokens` : 'Disabled'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-amber-800 dark:text-amber-300">Prompt Caching:</span>
+                    <span className="ml-2 text-amber-700 dark:text-amber-400">{debug.promptCaching ? 'Enabled' : 'Disabled'}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-amber-800 dark:text-amber-300">System Prompt:</span>
+                    <span className="ml-2 text-amber-700 dark:text-amber-400">{debug.systemPromptLength} chars</span>
+                  </div>
+                  <div className="pt-2 border-t border-amber-200 dark:border-amber-800">
+                    <details className="cursor-pointer">
+                      <summary className="font-medium text-amber-800 dark:text-amber-300">System Prompt Preview</summary>
+                      <div className="mt-2 p-2 bg-amber-100 dark:bg-amber-950/40 rounded text-xs text-amber-700 dark:text-amber-400 whitespace-pre-wrap">
+                        {debug.systemPromptPreview}
+                      </div>
+                    </details>
                   </div>
                 </div>
               </div>

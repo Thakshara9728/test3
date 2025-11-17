@@ -51,19 +51,17 @@ export async function POST(request: NextRequest) {
     let systemPrompt = tool.mainPrompt;
 
     if (mode === 'start') {
-      // Start a new conversation
+      // Start a new conversation - combine firstMessagePrompt with user message
+      const firstMessage = userMessage
+        ? `${tool.firstMessagePrompt}\n\n${userMessage}`
+        : tool.firstMessagePrompt;
+
       messages = [
         {
           role: 'user',
-          content: tool.firstMessagePrompt,
+          content: firstMessage,
         },
       ];
-      if (userMessage) {
-        messages.push({
-          role: 'user',
-          content: userMessage,
-        });
-      }
     } else if (mode === 'continue') {
       // Continue an existing conversation
       if (conversationId) {
@@ -75,13 +73,17 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // Add continue prompt and user message
+      // Add continue prompt prepended to user message
+      const continueMessage = userMessage
+        ? `${tool.continuePartsPrompt}\n\n${userMessage}`
+        : tool.continuePartsPrompt;
+
       messages.push({
         role: 'user',
-        content: tool.continuePartsPrompt + (userMessage ? `\n\n${userMessage}` : ''),
+        content: continueMessage,
       });
     } else if (mode === 'custom' && userMessage) {
-      // Custom message
+      // Custom message - just user input, no prompt template
       if (conversationId) {
         const conversation = await prisma.toolConversation.findUnique({
           where: { id: conversationId },
@@ -140,8 +142,28 @@ export async function POST(request: NextRequest) {
       ];
     }
 
+    // Log what we're sending to Claude API
+    console.log('=== CLAUDE API REQUEST ===');
+    console.log('Tool:', tool.name);
+    console.log('Mode:', mode);
+    console.log('Model:', tool.model);
+    console.log('System Prompt:', systemPrompt.substring(0, 200) + '...');
+    console.log('Messages:', JSON.stringify(messages, null, 2));
+    console.log('Extended Thinking:', tool.useExtendedThinking ? `Enabled (${tool.useUltraThink ? '50k' : tool.thinkingBudget} tokens)` : 'Disabled');
+    console.log('Web Search:', tool.useWebSearch ? 'Enabled' : 'Disabled');
+    console.log('Prompt Caching:', tool.usePromptCaching ? 'Enabled' : 'Disabled');
+    console.log('Max Tokens:', tool.maxTokens);
+    console.log('========================');
+
     // Make the API call (caching is handled automatically when cache_control is present)
     const response = await anthropic.messages.create(requestParams);
+
+    // Log response details
+    console.log('=== CLAUDE API RESPONSE ===');
+    console.log('Stop Reason:', response.stop_reason);
+    console.log('Usage:', response.usage);
+    console.log('Content Blocks:', response.content.length);
+    console.log('===========================');
 
     // Extract content blocks
     let textContent = '';
@@ -196,6 +218,17 @@ export async function POST(request: NextRequest) {
       },
       cost: totalCost,
       webSearchUsed,
+      debug: {
+        model: tool.model,
+        mode,
+        systemPromptLength: systemPrompt.length,
+        systemPromptPreview: systemPrompt.substring(0, 200) + '...',
+        messagesSent: messages.length,
+        extendedThinking: tool.useExtendedThinking,
+        thinkingBudget: tool.useUltraThink ? 50000 : tool.thinkingBudget,
+        promptCaching: tool.usePromptCaching,
+        maxTokens: tool.maxTokens,
+      },
     });
   } catch (error: any) {
     console.error('Error in Claude Tool API:', error);
