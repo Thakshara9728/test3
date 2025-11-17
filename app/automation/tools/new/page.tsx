@@ -16,7 +16,7 @@ export default function NewToolPage() {
     mainPrompt: '',
     firstMessagePrompt: '',
     continuePartsPrompt: '',
-    model: 'claude-sonnet-3-7-20250219',
+    model: 'claude-3-7-sonnet-20250219',
     useExtendedThinking: true,
     thinkingBudget: 10000,
     useWebSearch: true,
@@ -187,7 +187,7 @@ export default function NewToolPage() {
                   onChange={(e) => setFormData({ ...formData, model: e.target.value })}
                   className="w-full px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="claude-sonnet-3-7-20250219">Claude Sonnet 3.7</option>
+                  <option value="claude-3-7-sonnet-20250219">Claude Sonnet 3.7</option>
                   <option value="claude-sonnet-4-20250514">Claude Sonnet 4</option>
                   <option value="claude-opus-4-20250514">Claude Opus 4</option>
                 </select>

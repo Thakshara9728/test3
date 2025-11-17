@@ -190,7 +190,7 @@ while maintaining the same tone and style.
 ## Configuration
 
 ### Model Options
-- `claude-sonnet-3-7-20250219` (Claude Sonnet 3.7) - Recommended
+- `claude-3-7-sonnet-20250219` (Claude Sonnet 3.7) - Recommended
 - `claude-sonnet-4-20250514` (Claude Sonnet 4)
 - `claude-opus-4-20250514` (Claude Opus 4)
 

@@ -167,7 +167,7 @@ model ClaudeTool {
   continuePartsPrompt   String    // Prompt for continuing/extending content
 
   // Claude API settings
-  model                 String    @default("claude-sonnet-3-7-20250219")
+  model                 String    @default("claude-3-7-sonnet-20250219")
   useExtendedThinking   Boolean   @default(true)
   thinkingBudget        Int?      @default(10000) // Tokens for thinking
   useWebSearch          Boolean   @default(true)
