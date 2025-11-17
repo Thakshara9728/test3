@@ -56,6 +56,26 @@ export default function AutomationDashboard() {
             </p>
           </Link>
 
+          <Link
+            href="/automation/tools"
+            className="group bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 rounded-2xl p-6 text-white transition-all hover:shadow-2xl hover:shadow-emerald-500/30 hover:-translate-y-1"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Claude API Tools</h3>
+            <p className="text-emerald-100 text-sm">
+              Create custom tools with Sonnet 3.7, extended thinking, and web search
+            </p>
+          </Link>
+
           <div className="group bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-6 text-slate-400 dark:text-slate-500 cursor-not-allowed">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-slate-300 dark:bg-slate-600 rounded-xl flex items-center justify-center">
