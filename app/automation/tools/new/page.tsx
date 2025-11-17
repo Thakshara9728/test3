@@ -198,6 +198,9 @@ export default function NewToolPage() {
                     <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (Oct 2024)</option>
                     <option value="claude-3-5-sonnet-20240620">Claude 3.5 Sonnet (Jun 2024)</option>
                   </optgroup>
+                  <optgroup label="Claude 3.7">
+                    <option value="claude-3-7-sonnet-20250219">Claude 3.7 Sonnet</option>
+                  </optgroup>
                   <optgroup label="Claude 3">
                     <option value="claude-3-opus-20240229">Claude 3 Opus</option>
                     <option value="claude-3-sonnet-20240229">Claude 3 Sonnet</option>
