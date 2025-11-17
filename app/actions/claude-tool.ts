@@ -62,7 +62,7 @@ export async function createClaudeTool(data: {
         mainPrompt: data.mainPrompt,
         firstMessagePrompt: data.firstMessagePrompt,
         continuePartsPrompt: data.continuePartsPrompt,
-        model: data.model || 'claude-3-7-sonnet-20250219',
+        model: data.model || 'claude-sonnet-4-5-20250929',
         useExtendedThinking: data.useExtendedThinking ?? true,
         thinkingBudget: data.thinkingBudget ?? 10000,
         useUltraThink: data.useUltraThink ?? false,

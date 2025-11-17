@@ -2,11 +2,11 @@
 
 ## Overview
 
-The Claude API Tool feature allows you to create custom AI tools powered by Claude Sonnet 3.7 with extended thinking and web search capabilities. Each tool can be configured with three distinct prompts to control different stages of interaction.
+The Claude API Tool feature allows you to create custom AI tools powered by Claude Sonnet 4.5 with extended thinking and web search capabilities. Each tool can be configured with three distinct prompts to control different stages of interaction.
 
 ## Features
 
-- **Claude Sonnet 3.7**: Uses the latest Claude Sonnet 3.7 model with extended thinking
+- **Claude Sonnet 4.5**: Uses the latest Claude Sonnet 4.5 model with extended thinking
 - **Extended Thinking**: Enable deep reasoning with configurable thinking budgets (up to 100,000 tokens)
 - **UltraThink Mode**: Deep thinking mode with 50,000 token budget for complex reasoning
 - **Prompt Caching**: Cache system prompts to save 90% on repeated requests (costs 25% more to write, 90% less to read)
@@ -32,7 +32,7 @@ model ClaudeTool {
   continuePartsPrompt   String    // Prompt for continuing/extending content
 
   // Claude API settings
-  model                 String    @default("claude-3-7-sonnet-20250219")
+  model                 String    @default("claude-sonnet-4-5-20250929")
   useExtendedThinking   Boolean   @default(true)
   thinkingBudget        Int?      @default(10000)
   useUltraThink         Boolean   @default(false) // 50k token budget
@@ -194,7 +194,7 @@ while maintaining the same tone and style.
 ## Configuration
 
 ### Model Options
-- `claude-3-7-sonnet-20250219` (Claude Sonnet 3.7) - Recommended
+- `claude-sonnet-4-5-20250929` (Claude Sonnet 4.5) - Recommended (Newest)
 - `claude-sonnet-4-20250514` (Claude Sonnet 4)
 - `claude-opus-4-20250514` (Claude Opus 4)
 
@@ -237,9 +237,11 @@ while maintaining the same tone and style.
 
 ## Cost Calculation
 
-Costs are automatically calculated based on Claude Sonnet 3.7 pricing:
+Costs are automatically calculated based on Claude Sonnet 4.5 pricing:
 - Input: $3 per million tokens
 - Output: $15 per million tokens
+
+Note: The pricing displayed uses Sonnet 4.5 rates. If using different models (Sonnet 4 or Opus 4), adjust the calculation in the API route accordingly.
 
 Formula:
 ```
