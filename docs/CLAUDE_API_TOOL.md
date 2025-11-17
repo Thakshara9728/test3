@@ -38,7 +38,7 @@ model ClaudeTool {
   useUltraThink         Boolean   @default(false) // 50k token budget
   useWebSearch          Boolean   @default(true)
   usePromptCaching      Boolean   @default(true)  // Save $ with caching
-  maxTokens             Int       @default(8000)
+  maxTokens             Int       @default(16000) // Must be > thinkingBudget
   temperature           Float     @default(1.0)
 
   // Status
@@ -216,6 +216,7 @@ while maintaining the same tone and style.
 - **Thinking Budget**: 1,000 - 100,000 tokens (default: 10,000)
 - **UltraThink Mode**: Automatically sets thinking budget to 50,000 tokens for complex reasoning tasks
 - Thinking output is displayed separately in the UI
+- **IMPORTANT**: `maxTokens` must be greater than `thinkingBudget`. The API will reject requests where maxTokens ≤ thinkingBudget.
 
 ### Prompt Caching
 - **Enabled by Default**: Caches the system prompt to reduce costs
@@ -241,8 +242,9 @@ while maintaining the same tone and style.
   - `user_location`: Localize search results
 
 ### Token Limits
-- **Max Tokens**: 1,024 - 16,384 (default: 8,000)
+- **Max Tokens**: 1,024 - 16,384 (default: 16,000)
 - Controls the maximum length of generated responses
+- **Must be greater than thinkingBudget** when extended thinking is enabled
 
 ### Temperature
 - Range: 0.0 - 2.0 (default: 1.0)

@@ -22,7 +22,7 @@ export default function NewToolPage() {
     useUltraThink: false,
     useWebSearch: true,
     usePromptCaching: true,
-    maxTokens: 8000,
+    maxTokens: 16000,
     temperature: 1.0,
   });
 

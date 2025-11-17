@@ -68,7 +68,7 @@ export async function createClaudeTool(data: {
         useUltraThink: data.useUltraThink ?? false,
         useWebSearch: data.useWebSearch ?? true,
         usePromptCaching: data.usePromptCaching ?? true,
-        maxTokens: data.maxTokens ?? 8000,
+        maxTokens: data.maxTokens ?? 16000,
         temperature: data.temperature ?? 1.0,
       },
     });
