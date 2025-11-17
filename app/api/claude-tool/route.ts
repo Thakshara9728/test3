@@ -140,10 +140,8 @@ export async function POST(request: NextRequest) {
       ];
     }
 
-    // Make the API call using prompt caching endpoint if enabled
-    const response = tool.usePromptCaching
-      ? await anthropic.beta.prompt_caching.messages.create(requestParams)
-      : await anthropic.messages.create(requestParams);
+    // Make the API call (caching is handled automatically when cache_control is present)
+    const response = await anthropic.messages.create(requestParams);
 
     // Extract content blocks
     let textContent = '';
