@@ -72,7 +72,7 @@ export default function AutomationDashboard() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Claude API Tools</h3>
             <p className="text-emerald-100 text-sm">
-              Create custom tools with Sonnet 3.7, extended thinking, and web search
+              Create custom tools with Claude models, extended thinking, and web search
             </p>
           </Link>
 

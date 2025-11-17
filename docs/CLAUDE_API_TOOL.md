@@ -2,11 +2,11 @@
 
 ## Overview
 
-The Claude API Tool feature allows you to create custom AI tools powered by Claude Sonnet 4.5 with extended thinking and web search capabilities. Each tool can be configured with three distinct prompts to control different stages of interaction.
+The Claude API Tool feature allows you to create custom AI tools powered by Claude API models with extended thinking and web search capabilities. Each tool can be configured with three distinct prompts to control different stages of interaction.
 
 ## Features
 
-- **Claude Sonnet 4.5**: Uses the latest Claude Sonnet 4.5 model with extended thinking
+- **Multiple Claude Models**: Support for Claude 4, Claude 3.5, and Claude 3 families with extended thinking
 - **Extended Thinking**: Enable deep reasoning with configurable thinking budgets (up to 100,000 tokens)
 - **UltraThink Mode**: Deep thinking mode with 50,000 token budget for complex reasoning
 - **Prompt Caching**: Cache system prompts to save 90% on repeated requests (costs 25% more to write, 90% less to read)
@@ -194,9 +194,22 @@ while maintaining the same tone and style.
 ## Configuration
 
 ### Model Options
-- `claude-sonnet-4-5-20250929` (Claude Sonnet 4.5) - Recommended (Newest)
+
+**Claude 4 Family (Latest):**
+- `claude-sonnet-4-5-20250929` (Claude Sonnet 4.5) - Recommended for most use cases
 - `claude-sonnet-4-20250514` (Claude Sonnet 4)
-- `claude-opus-4-20250514` (Claude Opus 4)
+- `claude-opus-4-20250514` (Claude Opus 4) - Most capable
+
+**Claude 3.5 Family:**
+- `claude-3-5-sonnet-20241022` (Claude 3.5 Sonnet - October 2024)
+- `claude-3-5-sonnet-20240620` (Claude 3.5 Sonnet - June 2024)
+
+**Claude 3 Family:**
+- `claude-3-opus-20240229` (Claude 3 Opus) - Most capable in Claude 3 family
+- `claude-3-sonnet-20240229` (Claude 3 Sonnet) - Balanced performance
+- `claude-3-haiku-20240307` (Claude 3 Haiku) - Fastest and most cost-effective
+
+**Note:** Extended thinking is only available on certain models. Check the Anthropic documentation for model-specific features.
 
 ### Extended Thinking
 - **Enabled**: Allows Claude to think deeply before responding

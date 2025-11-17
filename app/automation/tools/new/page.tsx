@@ -189,9 +189,20 @@ export default function NewToolPage() {
                   onChange={(e) => setFormData({ ...formData, model: e.target.value })}
                   className="w-full px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="claude-sonnet-4-5-20250929">Claude Sonnet 4.5 (Newest)</option>
-                  <option value="claude-sonnet-4-20250514">Claude Sonnet 4</option>
-                  <option value="claude-opus-4-20250514">Claude Opus 4</option>
+                  <optgroup label="Claude 4 (Latest)">
+                    <option value="claude-sonnet-4-5-20250929">Claude Sonnet 4.5</option>
+                    <option value="claude-sonnet-4-20250514">Claude Sonnet 4</option>
+                    <option value="claude-opus-4-20250514">Claude Opus 4</option>
+                  </optgroup>
+                  <optgroup label="Claude 3.5">
+                    <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (Oct 2024)</option>
+                    <option value="claude-3-5-sonnet-20240620">Claude 3.5 Sonnet (Jun 2024)</option>
+                  </optgroup>
+                  <optgroup label="Claude 3">
+                    <option value="claude-3-opus-20240229">Claude 3 Opus</option>
+                    <option value="claude-3-sonnet-20240229">Claude 3 Sonnet</option>
+                    <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
+                  </optgroup>
                 </select>
               </div>
 
