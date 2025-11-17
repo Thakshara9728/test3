@@ -1,9 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { anthropic } from '@/lib/anthropic';
 import { prisma } from '@/lib/prisma';
+import Anthropic from '@anthropic-ai/sdk';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for API key first
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json(
+        { error: 'ANTHROPIC_API_KEY is not set in environment variables. Please add it to your .env.local file.' },
+        { status: 500 }
+      );
+    }
+
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+
     const body = await request.json();
     const { toolId, userMessage, conversationId, mode = 'start' } = body;
 
