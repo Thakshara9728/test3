@@ -200,9 +200,16 @@ while maintaining the same tone and style.
 - Thinking output is displayed separately in the UI
 
 ### Web Search
+- **Tool Type**: `web_search_20250305`
 - When enabled, Claude can search the web for current information
 - Automatically integrates search results into responses
+- **Max Uses**: Limited to 5 searches per request
+- **Pricing**: $10 per 1,000 searches (plus standard token costs)
 - Tracked in conversation metadata
+- Supports optional configurations:
+  - `allowed_domains`: Only include results from specified domains
+  - `blocked_domains`: Exclude results from specified domains
+  - `user_location`: Localize search results
 
 ### Token Limits
 - **Max Tokens**: 1,024 - 16,384 (default: 8,000)

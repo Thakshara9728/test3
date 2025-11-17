@@ -118,7 +118,9 @@ export async function POST(request: NextRequest) {
     if (tool.useWebSearch) {
       requestParams.tools = [
         {
-          type: 'web_search_20250610',
+          type: 'web_search_20250305',
+          name: 'web_search',
+          max_uses: 5, // Limit searches per request
         },
       ];
     }
