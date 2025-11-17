@@ -76,6 +76,26 @@ export default function AutomationDashboard() {
             </p>
           </Link>
 
+          <Link
+            href="/automation/transcript"
+            className="group bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-2xl p-6 text-white transition-all hover:shadow-2xl hover:shadow-red-500/30 hover:-translate-y-1"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                </svg>
+              </div>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2">YouTube Transcript</h3>
+            <p className="text-red-100 text-sm">
+              Extract transcripts from YouTube videos with copy and download features
+            </p>
+          </Link>
+
           <div className="group bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-6 text-slate-400 dark:text-slate-500 cursor-not-allowed">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-slate-300 dark:bg-slate-600 rounded-xl flex items-center justify-center">
