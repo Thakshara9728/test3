@@ -11,7 +11,7 @@ interface Video {
 
 export async function POST(request: NextRequest) {
   try {
-    const { channelUrl } = await request.json();
+    const { channelUrl, videoCount = 25 } = await request.json();
 
     if (!channelUrl) {
       return NextResponse.json(
@@ -19,6 +19,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Validate videoCount
+    const maxResults = Math.min(Math.max(parseInt(videoCount) || 25, 5), 50);
 
     const apiToken = process.env.APIFY_API_TOKEN;
 
@@ -33,7 +36,7 @@ export async function POST(request: NextRequest) {
     // Using POPULAR sorting to get all-time most viewed videos
     const input = {
       startUrls: [{ url: channelUrl }],
-      maxResults: 25, // Get top 25 most viewed regular videos
+      maxResults, // Get top N most viewed regular videos (user-selected)
       maxResultsShorts: 0, // Exclude YouTube Shorts
       maxResultStreams: 0, // Exclude live streams
       sortVideosBy: 'POPULAR' // Sort by most popular (all-time most viewed)
@@ -63,7 +66,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     // Transform videos (already sorted by popularity from API)
-    // Additional client-side sort as backup to ensure top 25 by view count
+    // Additional client-side sort as backup to ensure proper ordering
     const videos: Video[] = data
       .filter((item: any) => item.title && item.viewCount !== undefined)
       .map((item: any) => ({
@@ -75,7 +78,7 @@ export async function POST(request: NextRequest) {
         duration: item.duration || '',
       }))
       .sort((a: Video, b: Video) => b.viewCount - a.viewCount) // Sort by view count descending
-      .slice(0, 25); // Ensure we return exactly top 25
+      .slice(0, maxResults); // Ensure we return exactly the requested count
 
     return NextResponse.json({ videos, count: videos.length });
   } catch (error: any) {

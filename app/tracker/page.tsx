@@ -19,6 +19,7 @@ export default function Home() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [videoCount, setVideoCount] = useState(25);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ channelUrl }),
+        body: JSON.stringify({ channelUrl, videoCount }),
       });
 
       const data = await response.json();
@@ -65,13 +66,43 @@ export default function Home() {
             </h1>
           </div>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            Discover the top 25 all-time most viewed videos from any YouTube channel
+            Discover the top all-time most viewed videos from any YouTube channel
           </p>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Video Count Slider */}
+        <div className="max-w-3xl mx-auto mb-8">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-700 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <label htmlFor="videoCount" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                Number of videos to fetch
+              </label>
+              <span className="text-2xl font-bold bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent">
+                {videoCount}
+              </span>
+            </div>
+            <input
+              id="videoCount"
+              type="range"
+              min="5"
+              max="50"
+              step="5"
+              value={videoCount}
+              onChange={(e) => setVideoCount(parseInt(e.target.value))}
+              disabled={loading}
+              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+            <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400 mt-2">
+              <span>5</span>
+              <span>25</span>
+              <span>50</span>
+            </div>
+          </div>
+        </div>
+
         {/* Search Form */}
         <form onSubmit={handleSubmit} className="mb-12">
           <div className="max-w-3xl mx-auto">
