@@ -30,12 +30,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare input for Apify YouTube scraper
-    // Using 'popular' sort to get all-time most viewed videos
+    // Using 'popular' sorting to get all-time most viewed videos
     const input = {
       startUrls: [{ url: channelUrl }],
-      maxResults: 50, // Get top 50 most viewed videos
-      searchType: 'channel',
-      sortBy: 'popular' // Sort by all-time most popular/viewed videos
+      maxResults: 50, // Get top 50 most viewed regular videos
+      maxResultsShorts: 0, // Exclude YouTube Shorts
+      maxResultStreams: 0, // Exclude live streams
+      sorting: 'popular' // Sort by most popular (all-time most viewed)
     };
 
     // Call Apify API
