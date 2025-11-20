@@ -159,7 +159,7 @@ export default function Home() {
                   Sorted by all-time views
                 </div>
               </div>
-              <ExportButtons titles={videos.map(v => v.title)} />
+              <ExportButtons videos={videos} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {videos.map((video, index) => (
