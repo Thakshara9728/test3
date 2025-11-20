@@ -65,7 +65,7 @@ export default function Home() {
             </h1>
           </div>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            Discover the top 50 all-time most viewed videos from any YouTube channel
+            Discover the top 25 all-time most viewed videos from any YouTube channel
           </p>
         </div>
       </div>
