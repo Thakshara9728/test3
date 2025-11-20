@@ -65,7 +65,7 @@ export default function Home() {
             </h1>
           </div>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            Discover the top 50 most viewed videos from any YouTube channel
+            Discover the top 50 all-time most viewed videos from any YouTube channel
           </p>
         </div>
       </div>
@@ -125,7 +125,7 @@ export default function Home() {
                   Top {videos.length} Viral Videos
                 </h2>
                 <div className="text-sm text-slate-600 dark:text-slate-400">
-                  Sorted by views
+                  Sorted by all-time views
                 </div>
               </div>
               <ExportButtons titles={videos.map(v => v.title)} />

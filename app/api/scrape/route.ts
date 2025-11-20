@@ -30,10 +30,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare input for Apify YouTube scraper
+    // Using 'popular' sorting to get all-time most viewed videos
     const input = {
       startUrls: [{ url: channelUrl }],
-      maxResults: 200, // Fetch more to ensure we get top 50
-      searchType: 'channel'
+      maxResults: 50, // Get top 50 most viewed regular videos
+      maxResultsShorts: 0, // Exclude YouTube Shorts
+      maxResultStreams: 0, // Exclude live streams
+      sorting: 'popular' // Sort by most popular (all-time most viewed)
     };
 
     // Call Apify API
@@ -59,7 +62,8 @@ export async function POST(request: NextRequest) {
 
     const data = await response.json();
 
-    // Transform and sort videos by view count
+    // Transform videos (already sorted by popularity from API)
+    // Additional client-side sort as backup to ensure top 50 by view count
     const videos: Video[] = data
       .filter((item: any) => item.title && item.viewCount !== undefined)
       .map((item: any) => ({
@@ -70,8 +74,8 @@ export async function POST(request: NextRequest) {
         date: item.date || '',
         duration: item.duration || '',
       }))
-      .sort((a: Video, b: Video) => b.viewCount - a.viewCount)
-      .slice(0, 50); // Get top 50
+      .sort((a: Video, b: Video) => b.viewCount - a.viewCount) // Sort by view count descending
+      .slice(0, 50); // Ensure we return exactly top 50
 
     return NextResponse.json({ videos, count: videos.length });
   } catch (error: any) {
